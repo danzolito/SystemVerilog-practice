@@ -26,27 +26,27 @@ module multiplier_4x4 (
     );
 
     multiplier_2x2 inst_P1 (
-        .A(),
-        .B(),
-        .P()
+        .A(A[3:2]),
+        .B(B[1:0]),
+        .P(P1)
     );
 
     multiplier_2x2 inst_P2 (
-        .A(),
-        .B(),
-        .P()
+        .A(A[1:0]),
+        .B(B[3:2]),
+        .P(P2)
     );
 
     multiplier_2x2 inst_P3 (
-        .A(),
-        .B(),
-        .P()
+        .A(A[3:2]),
+        .B(B[3:2]),
+        .P(P3)
     );
 
     assign shift_P0 = {4'b0000, P0};
-    assign shift_P1 = {};
-    assign shift_P2 = {};
-    assign shift_P3 = {};
+    assign shift_P1 = {2'b00, P1, 2'b00};
+    assign shift_P2 = {2'b00, P2, 2'b00};
+    assign shift_P3 = {P3, 4'b0000};
 
     full_adder_8bit inst_SUM1 (
         .A    (shift_P0),
@@ -57,19 +57,19 @@ module multiplier_4x4 (
     );
 
     full_adder_8bit inst_SUM2 (
-        .A    (),
-        .B    (),
-        .Cin  (),
-        .Cout (),
-        .S    ()
+        .A    (shift_P2),
+        .B    (shift_P3),
+        .Cin  (1'b0),
+        .Cout (carry2),
+        .S    (SUM_2)
     );
 
     full_adder_8bit inst_SUM3 (
-        .A    (),
-        .B    (),
-        .Cin  (),
+        .A    (SUM_1),
+        .B    (SUM_2),
+        .Cin  (1'b0),
         .Cout (),
-        .S    ()
+        .S    (P)
     );
 
 endmodule
