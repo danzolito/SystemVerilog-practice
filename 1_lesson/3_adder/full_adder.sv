@@ -7,6 +7,7 @@ module full_adder(
     output logic Cout
 );
 
-
+    assign S = A ^ B ^ Cin;
+    assign Cout = (A & B) | (A & Cin) | (B & Cin);
 
 endmodule
